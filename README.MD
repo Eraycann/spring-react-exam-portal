@@ -12,6 +12,22 @@ ExamSystem, eğitim kurumları için uçtan uca sınav yönetimi sağlayan moder
 
 ---
 
+## Proje Görüntüleri
+
+Aşağıda projenin çalışan ekran görüntüleri ve kullanıcı arayüzü örnekleri yer almaktadır:
+
+| | | |
+|---|---|---|
+| ![Foto 1](foto1.png) | ![Foto 2](foto2.png) | ![Foto 3](foto3.png) |
+| ![Foto 4](foto4.png) | ![Foto 5](foto5.png) | ![Foto 6](foto6.png) |
+| ![Foto 7](foto7.png) | ![Foto 8](foto8.png) | ![Foto 9](foto9.png) |
+| ![Foto 10](foto10.png) | ![Foto 11](foto11.png) | ![Foto 12](foto12.png) |
+| ![Foto 13](foto13.png) | ![Foto 14](foto14.png) | ![Foto 15](foto15.png) |
+| ![Foto 16](foto16.png) | ![Foto 17](foto17.png) | ![Foto 18](foto18.png) |
+| ![Foto 19](foto19.png) | ![Foto 20](foto20.png) | |
+
+---
+
 ## 📋 İçindekiler
 
 - [Ne çözülüyor?](#ne-çözülüyor)
@@ -242,19 +258,7 @@ Proje üretime dağıtmadan önce şu adımları kontrol edin:
 - modern frontend ve sağlam backend altyapısı
 - üretime hazırlık için ayrı paketleme adımları
 
-## Proje Görüntüleri
 
-Aşağıda projenin çalışan ekran görüntüleri ve kullanıcı arayüzü örnekleri yer almaktadır:
-
-| | | |
-|---|---|---|
-| ![Foto 1](foto1.png) | ![Foto 2](foto2.png) | ![Foto 3](foto3.png) |
-| ![Foto 4](foto4.png) | ![Foto 5](foto5.png) | ![Foto 6](foto6.png) |
-| ![Foto 7](foto7.png) | ![Foto 8](foto8.png) | ![Foto 9](foto9.png) |
-| ![Foto 10](foto10.png) | ![Foto 11](foto11.png) | ![Foto 12](foto12.png) |
-| ![Foto 13](foto13.png) | ![Foto 14](foto14.png) | ![Foto 15](foto15.png) |
-| ![Foto 16](foto16.png) | ![Foto 17](foto17.png) | ![Foto 18](foto18.png) |
-| ![Foto 19](foto19.png) | ![Foto 20](foto20.png) | |
 
 ## Sunum (gif)
 
