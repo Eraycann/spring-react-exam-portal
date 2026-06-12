@@ -1,5 +1,11 @@
 # ExamSystem
 
+<p align="center">
+  <video controls width="720" src="docs/sunum.mp4">
+    Tarayıcınız video etiketini desteklemiyor. Videoyu indirmek için <a href="sunum.mov">sunum.mov</a> bağlantısını kullanın.
+  </video>
+</p>
+
 ExamSystem, eğitim kurumları için uçtan uca sınav yönetimi sağlayan bir platformdur. Kurs yönetimi, sınav planlama, soru havuzu, öğrenci kayıtları ve gönderim takibi gibi süreci tek bir çözümde birleştirir.
 
 ## Ne çözülüyor?
