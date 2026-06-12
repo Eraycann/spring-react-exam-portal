@@ -1,164 +1,176 @@
 # ExamSystem
 
-**ExamSystem**, öğrenci sınav yönetimi için geliştirilmiş bir tam yığın uygulamadır. Spring Boot tabanlı backend ile React + Vite frontend bileşeni içerir. Proje, kurs yönetimi, sınav oluşturma, soru yönetimi, öğrenci kaydı, yanıt gönderimi ve sınav sonuç takibi gibi işlevlere sahiptir.
+ExamSystem, eğitim kurumları için uçtan uca sınav yönetimi sağlayan bir platformdur. Kurs yönetimi, sınav planlama, soru havuzu, öğrenci kayıtları ve gönderim takibi gibi süreci tek bir çözümde birleştirir.
 
-## Proje Yapısı
+## Ne çözülüyor?
 
-- `ExamSystem/` - Spring Boot backend uygulaması
-- `ExamSystemFrontend/` - React + Vite frontend uygulaması
+Sistem, eğitimde şu sorunları adresler:
 
-## Öne Çıkan Özellikler
+- kurs ve sınav verilerinin farklı yerlerde saklanması
+- öğretmenlerin sınav ve soru sürecini elle yönetmek zorunda kalması
+- öğrencilerin sınavlara erişim ve kaydının dağınık olması
+- güvenli kimlik doğrulama ve yetkilendirme ihtiyacı
 
-- Kullanıcı kimlik doğrulaması ve yetkilendirme
-- JWT tabanlı token yönetimi ve refresh token desteği
-- Google OAuth2 ile sosyal giriş desteği
-- PostgreSQL veri tabanı bağlantısı
-- Sınav, soru, konu, kurs, öğrenci, öğretmen ve ilgili kayıt yönetimi
-- Öğrenci kayıtları, sınav gönderimleri ve cevap inceleme
-- React tabanlı modern yönetici ve öğrenci arayüzü
+ExamSystem, bu ihtiyaçları aşağıdaki şekilde ele alır:
 
-## Teknolojiler
+- kurs, ders, sınav ve soru yönetimini tek bir merkezde toplar
+- rollere göre öğretmen, öğrenci ve yönetici deneyimini ayrı kılar
+- JWT ve Google OAuth2 ile güvenli oturum açma sağlar
+- frontend ile backend arasında token yenileme ve izin kontrolü sunar
 
-### Backend
+## Neden tercih edilmeli?
 
-- Java 21
-- Spring Boot 3.3.1
-- Spring Security
-- Spring Data JPA
-- Spring Boot Validation
-- Spring Boot Mail
-- Springdoc OpenAPI
-- MapStruct
-- JJWT
-- PostgreSQL
-- Lombok
+- açık iş akışı: `Dashboard`, `My Courses`, `Take Exam`, `Create Course`, `Exam Submissions`
+- güçlü güvenlik: JWT tabanlı API yetkilendirmesi ve sosyal giriş desteği
+- modüler yapı: backend mantığı `auth`, `course`, `exam`, `student`, `teacher`, `topic` şeklinde ayrılmış
+- hızlı frontend: React + Vite ile modern yönetim paneli deneyimi
+- ayrı geliştirme: backend ve frontend birbirinden bağımsız çalışır, kolay test edilir
 
-### Frontend
+## Mimari
 
-- React 19
-- Vite
-- React Router DOM
-- Material UI
-- Tailwind CSS
-- ESLint
+- `ExamSystem/` — Spring Boot backend
+- `ExamSystemFrontend/` — React + Vite frontend
 
-## Gereksinimler
+Backend, REST API ve kimlik doğrulama kontrollerini yönetir. Frontend ise kullanıcı arayüzünü sağlar ve `http://localhost:8080/api` üzerinden backend ile iletişim kurar.
 
-- Java 21
-- Maven
-- Node.js ve npm
-- PostgreSQL
+## Kullanıcı odaklı özellikler
 
-## Backend Kurulum ve Çalıştırma
+### Öğretmenler
+- kurs oluşturma ve düzenleme
+- sınav programlama
+- soru havuzu yönetimi
+- gönderimleri inceleme
+- öğrenci kayıtlarını takip etme
 
-1. Veri tabanını hazırlayın
-   - PostgreSQL içinde `ExamSystem` adında bir veri tabanı oluşturun.
-   - `application.properties` dosyasındaki bağlantı bilgilerini ihtiyacınıza göre güncelleyin.
+### Öğrenciler
+- kayıtlı kurslara erişim
+- sınavlara katılma
+- sınav cevaplarını gönderme
+- geçmiş gönderimleri görme
 
-2. Ortam değişkenlerini ayarlayın
-   - Google OAuth2 için:
-     - `GOOGLE_CLIENT_ID`
-     - `GOOGLE_CLIENT_SECRET`
+### Ortak özellikler
+- kullanıcı kaydı ve oturum açma
+- Google OAuth2 ile giriş
+- JWT tabanlı token yenileme
+- rol bazlı erişim kontrolü
 
-3. Backend servisini çalıştırın
+## Üretime hazır nokta
 
-```powershell
-cd ExamSystem
-./mvnw spring-boot:run
-```
+Aşağıdaki adımlar projeyi geliştirme ortamından üretime taşımak için temel yol haritasını verir.
 
-> Varsayılan olarak backend `http://localhost:8080` adresinde çalışır.
+### 1. Veritabanı
 
-## Frontend Kurulum ve Çalıştırma
+- PostgreSQL üzerinde `ExamSystem` veritabanı oluşturun.
+- `ExamSystem/src/main/resources/application.properties` içindeki bağlantı bilgilerini güncelleyin.
+- Üretimde `spring.jpa.hibernate.ddl-auto=validate` veya `none` kullanın; `update` yalnızca geliştirme için uygundur.
 
-1. Bağımlılıkları yükleyin
+### 2. Güvenlik
 
-```powershell
-cd ExamSystemFrontend
-npm install
-```
+- `application.security.jwt.secret-key` için güçlü ve gizli bir anahtar kullanın.
+- Google OAuth2 için:
+  - `GOOGLE_CLIENT_ID`
+  - `GOOGLE_CLIENT_SECRET`
+- `app.oauth2.redirectUri` değeri frontend’deki callback URL ile eşleşmelidir.
 
-2. Frontend uygulamasını çalıştırın
-
-```powershell
-npm run dev
-```
-
-> Frontend, `http://localhost:5173` üzerinde çalışır ve API isteklerini `http://localhost:8080/api` üzerinden backend'e yönlendirir.
-
-## Yapılandırma Detayları
-
-### Backend - `ExamSystem/src/main/resources/application.properties`
-
-- `spring.datasource.url` - PostgreSQL bağlantı adresi
-- `spring.datasource.username` - veri tabanı kullanıcı adı
-- `spring.datasource.password` - veri tabanı parola
-- `spring.jpa.hibernate.ddl-auto=update` - veri tabanı şemasını otomatik günceller
-- `application.security.jwt.secret-key` - JWT imzalama anahtarı
-- `application.security.jwt.expiration` - erişim token süresi (ms)
-- `application.security.jwt.refresh-token.expiration` - refresh token süresi (ms)
-- Google OAuth2 client ayarları için `GOOGLE_CLIENT_ID` ve `GOOGLE_CLIENT_SECRET` kullanılır
-- `app.oauth2.redirectUri` - OAuth2 callback URL
-
-### Frontend - `ExamSystemFrontend/src/utils/apiService.js`
-
-- API temel URL: `http://localhost:8080/api`
-- `accessToken` ve `refreshToken` tabanlı otomatik yenileme
-- 401 durumunda refresh token ile token yenileme
-- 403 durumunda yetkisiz erişim kontrolü
-
-## Proje Modülleri
-
-### Backend modülleri
-
-- `auth` - kimlik doğrulama, JWT ve OAuth2 işlemleri
-- `user` - platform kullanıcıları
-- `student` / `teacher` - öğrenci ve öğretmen yönetimi
-- `course` / `course_student` - kurs yönetimi ve öğrenci kurs kaydı
-- `exam` / `exam_question` / `exam_submission` - sınav, soru ve gönderim yönetimi
-- `topic` - konu yönetimi
-- `student_answer` - sınav cevapları
-- `common` - ortak yardımcı bileşenler ve DTO'lar
-
-### Frontend bileşenleri
-
-- `components/` - modaller, sayfa bileşenleri ve kullanıcı etkileşimleri
-- `contexts/` - kimlik doğrulama bağlamı
-- `hooks/` - özel kancalar
-- `pages/` - uygulama sayfaları
-- `services/` - kimlik doğrulama servisleri
-- `utils/` - API servisleri, sabitler ve hata işleme
-
-## Kullanım Akışı
-
-1. Kullanıcı `Login` veya `Register` işlemi ile giriş yapar.
-2. Frontend, JWT token ile istekleri backend'e gönderir.
-3. Backend kimlik doğrulama, yetkilendirme ve kurs/sınav işlemlerini yönetir.
-4. Öğrenciler sınavlara katılır, soruları yanıtlar ve sınav gönderir.
-5. Öğretmenler sınavları oluşturur, soruları düzenler ve gönderimleri inceleyebilir.
-
-## Derleme ve Üretim İçin
-
-### Backend paketleme
+### 3. Backend paketleme
 
 ```powershell
 cd ExamSystem
 ./mvnw clean package
 ```
 
-### Frontend üretim yapısı
+Üretim için oluşturulan JAR, `target/` klasöründe yer alır.
+
+### 4. Frontend paketleme
 
 ```powershell
 cd ExamSystemFrontend
+npm install
 npm run build
 ```
 
-## İpuçları
+Üretim yapısı `dist/` klasörüne çıkar.
 
-- `spring.jpa.hibernate.ddl-auto=update` geliştirme ortamı için uygundur. Üretim ortamında dikkatli kullanılmalıdır.
-- Google OAuth2 için `redirectUri` ayarının frontend URL ile uyumlu olduğundan emin olun.
-- API tabanlı frontend geliştirme yaparken backend çalışır durumda olmalıdır.
+## Çalıştırma
 
-## İletişim
+### Geliştirme
 
-Bu README temel kurulum, geliştirme ve yapılandırma bilgilerini içerir. Projeyi genişletirken backend `src/main/java/org/kafka/examsystem` ve frontend `src` klasörlerini inceleyebilirsiniz.
+```powershell
+cd ExamSystem
+./mvnw spring-boot:run
+```
+
+```powershell
+cd ExamSystemFrontend
+npm run dev
+```
+
+### Üretim
+
+- backend: `java -jar ExamSystem/target/ExamSystem-0.0.1-SNAPSHOT.jar`
+- frontend: üretilen `dist/` klasörünü bir web sunucusuna (Nginx, Apache, CDN) dağıtın
+
+> Frontend varsayılan olarak `http://localhost:5173` üzerinde çalışır. API istekleri `http://localhost:8080/api` adresine yönlendirilmelidir.
+
+## Konfigürasyon
+
+### Backend ayarları
+
+`ExamSystem/src/main/resources/application.properties` önemli alanlar:
+
+- `spring.datasource.url`
+- `spring.datasource.username`
+- `spring.datasource.password`
+- `spring.jpa.hibernate.ddl-auto`
+- `application.security.jwt.secret-key`
+- `application.security.jwt.expiration`
+- `application.security.jwt.refresh-token.expiration`
+- `spring.security.oauth2.client.registration.google.client-id`
+- `spring.security.oauth2.client.registration.google.client-secret`
+- `app.oauth2.redirectUri`
+
+### Frontend ayarları
+
+`ExamSystemFrontend/src/utils/apiService.js` içinde API tabanlı:
+
+- temel URL: `http://localhost:8080/api`
+- otomatik token yenileme (401 durumunda)
+- 403 yetki hatası yönetimi
+
+## Proje yapısı
+
+### Backend
+
+- `ExamSystem/src/main/java/org/kafka/examsystem`
+  - `auth`
+  - `course`
+  - `exam`
+  - `exam_question`
+  - `exam_submission`
+  - `student`
+  - `teacher`
+  - `topic`
+  - `user`
+
+### Frontend
+
+- `ExamSystemFrontend/src`
+  - `pages`
+  - `components`
+  - `contexts`
+  - `services`
+  - `utils`
+
+## Genişletme önerileri
+
+- notlandırma ve raporlama özellikleri ekleme
+- canlı sınav/zamanlayıcı desteği ekleme
+- kurs bazlı bildirim sistemi kurma
+- frontend ve backend entegrasyonunu tek bir dağıtım hattına taşıma
+
+## Temel avantajlar
+
+- düzenli işlem akışı ve rol bazlı erişim
+- hem öğretmen hem öğrenci hem yönetici için tek platform
+- modern frontend ve sağlam backend altyapısı
+- üretime hazırlık için ayrı paketleme adımları
